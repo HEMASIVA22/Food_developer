@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Food Developer — Discover the best local restaurants in Erode, Tamil Nadu. Order food, reserve tables, view cart, and explore authentic Kongunadu cuisine."
+    />
+    <meta
+      name="keywords"
+      content="Food Developer, Erode restaurants, order food online, book dining tables, Erode food, Kongunadu cuisine, Erode biryani, Pallipalayam chicken"
+    />
+    <meta name="author" content="Food Developer" />
+    <meta name="theme-color" content="#1d0b0d" />
+    <title>Food Developer — Order Food & Reserve Tables in Erode</title>
+
+    <!-- Google Fonts — Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome 6 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="nav" id="navbar">
+      <a href="#" class="nav__logo">FOOD <span>DEVELOPER</span></a>
+      <ul class="nav__links">
+        <li><a href="#hero" class="nav__link nav__link--active">Home</a></li>
+        <li><a href="#featured" class="nav__link">Featured</a></li>
+        <li><a href="#restaurants" class="nav__link">Restaurants</a></li>
+        <li><a href="#suggestions" class="nav__link">Suggestions</a></li>
+        <li><a href="#about" class="nav__link">About</a></li>
+      </ul>
+      <div class="nav__actions">
+        <button
+          class="nav__table-btn"
+          id="book-table-btn"
+          aria-label="Book a table"
+        >
+          <i class="fas fa-calendar-alt"></i> <span>Book Table</span>
+        </button>
+        <button
+          class="nav__cart-btn"
+          id="cart-btn"
+          aria-label="View shopping cart"
+        >
+          <i class="fas fa-shopping-bag"></i>
+          <span class="nav__cart-count" id="cart-count" data-count="0">0</span>
+        </button>
+      </div>
+      <button
+        class="nav__hamburger"
+        id="hamburger-btn"
+        aria-label="Open navigation menu"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav" id="mobile-nav">
+      <button
+        class="mobile-nav__close"
+        id="mobile-nav-close"
+        aria-label="Close navigation menu"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+      <a href="#hero" class="mobile-nav__link">Home</a>
+      <a href="#featured" class="mobile-nav__link">Featured</a>
+      <a href="#restaurants" class="mobile-nav__link">Restaurants</a>
+      <a href="#suggestions" class="mobile-nav__link">Suggestions</a>
+      <a href="#about" class="mobile-nav__link">About</a>
+    </div>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero" id="hero">
+      <div
+        class="hero__bg"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&h=900&fit=crop&q=80&quot;);
+        "
+      ></div>
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <span class="hero__tag">Discover & Dine</span>
+        <h1 class="hero__title">FOOD<br />DEVELOPER</h1>
+        <p class="hero__subtitle">
+          Order from Erode's finest local restaurants, book dining tables
+          instantly, explore authentic Kongunadu flavors, and view real-time
+          menu ratings and pricing.
+        </p>
+        <a href="#restaurants" class="btn-primary hero__cta"
+          >Explore Restaurants <i class="fas fa-arrow-right"></i
+        ></a>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <span class="hero__stat-number" data-count="10">10</span>
+            <span class="hero__stat-label">Restaurants</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-number" data-count="80">80</span>
+            <span class="hero__stat-label">Menu Items</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-number" data-count="6">6</span>
+            <span class="hero__stat-label">Cuisines</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FEATURED DISH ==================== -->
+    <section class="section section--dark" id="featured">
+      <div class="section__container">
+        <div class="featured reveal">
+          <div class="featured__image-wrap">
+            <img
+              class="featured__image"
+              src="https://images.unsplash.com/photo-1610057099443-fde6c99db9e1?w=700&h=500&fit=crop"
+              alt="Pallipalayam Chicken — Erode's signature Kongunadu dish"
+              loading="lazy"
+            />
+          </div>
+          <div class="featured__content">
+            <span class="featured__tag">Signature Dish</span>
+            <h2 class="featured__title">Pallipalayam<br />Chicken</h2>
+            <p class="featured__desc">
+              The crown jewel of Kongunadu cuisine — dry-roasted with shallots,
+              dried red chillies, garlic, and coconut slivers. Originating from
+              the town of Pallipalayam near Erode, this bold, rustic preparation
+              has become the region's most iconic dish.
+            </p>
+            <div class="featured__meta">
+              <span class="featured__price">₹250 – ₹500</span>
+              <span class="featured__rating"
+                ><i class="fas fa-star"></i> 4.7 Avg Rating</span
+              >
+            </div>
+            <a href="#restaurants" class="btn-primary"
+              >Find It Now <i class="fas fa-arrow-right"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RESTAURANTS SECTION ==================== -->
+    <section class="section section--light" id="restaurants">
+      <div class="section__container">
+        <div class="section__header reveal">
+          <span class="section__tag">Local Favorites</span>
+          <h2 class="section__title">Erode's Best Hotels</h2>
+          <p class="section__subtitle">
+            From legendary Kongunadu messes to modern multi-cuisine restaurants
+            — handpicked with real ratings, full menus, and honest pricing.
+          </p>
+        </div>
+
+        <!-- Controls: Search + Filter -->
+        <div class="controls reveal">
+          <div class="search__wrapper">
+            <i class="fas fa-search search__icon"></i>
+            <input
+              type="text"
+              class="search__input"
+              id="search-input"
+              placeholder="Search restaurants or dishes..."
+              aria-label="Search restaurants or dishes"
+            />
+          </div>
+          <div class="filter__bar">
+            <button class="filter__btn filter__btn--active" data-filter="all">
+              All
+            </button>
+            <button class="filter__btn" data-filter="nonveg">Non-Veg</button>
+            <button class="filter__btn" data-filter="veg">Vegetarian</button>
+            <button class="filter__btn" data-filter="biryani">Biryani</button>
+            <button class="filter__btn" data-filter="streetfood">
+              Street Food
+            </button>
+            <button class="filter__btn" data-filter="multicuisine">
+              Multi-Cuisine
+            </button>
+          </div>
+        </div>
+
+        <!-- Restaurant Grid (Rendered by JS) -->
+        <div class="restaurant-grid" id="restaurant-grid">
+          <!-- Cards rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SMART SUGGESTIONS ==================== -->
+    <section class="section section--dark" id="suggestions">
+      <div class="section__container">
+        <div class="section__header reveal">
+          <span class="section__tag">Smart Picks</span>
+          <h2 class="section__title">Our Suggestions</h2>
+          <p class="section__subtitle">
+            AI-curated recommendations to help you discover the best Erode has
+            to offer — from budget bites to spice-bomb specialties.
+          </p>
+        </div>
+
+        <!-- Suggestion Tabs -->
+        <div class="suggestions__tabs reveal" id="suggestion-tabs">
+          <button
+            class="suggestions__tab suggestions__tab--active"
+            data-suggestion="best-biryani"
+          >
+            🔥 Best Biryani
+          </button>
+          <button class="suggestions__tab" data-suggestion="budget-friendly">
+            💰 Budget Friendly
+          </button>
+          <button class="suggestions__tab" data-suggestion="top-rated">
+            ⭐ Top Rated
+          </button>
+          <button class="suggestions__tab" data-suggestion="must-try">
+            🍗 Must Try
+          </button>
+          <button class="suggestions__tab" data-suggestion="best-veg">
+            🥬 Best Veg
+          </button>
+          <button class="suggestions__tab" data-suggestion="spice-lovers">
+            🌶️ Spice Lovers
+          </button>
+        </div>
+
+        <!-- Suggestion Results (Rendered by JS) -->
+        <div id="suggestions-results" class="reveal">
+          <!-- Results rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT ERODE FOOD ==================== -->
+    <section class="section section--dark" id="about">
+      <div class="section__container">
+        <div class="about__grid reveal">
+          <div class="about__image-wrap">
+            <img
+              class="about__image"
+              src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&h=800&fit=crop"
+              alt="Traditional South Indian thali — the soul of Erode dining"
+              loading="lazy"
+            />
+          </div>
+          <div class="about__content">
+            <span class="featured__tag">Heritage & Flavor</span>
+            <h2 class="featured__title">The Soul of<br />Kongunadu</h2>
+            <p class="about__text">
+              Erode sits at the heart of the
+              <span class="about__highlight">Kongunadu region</span> — a land
+              where food is cooked with soul, not shortcuts. The cuisine here is
+              defined by its use of
+              <span class="about__highlight"
+                >fresh shallots, whole garlic, dried red chillies</span
+              >, and coconut, creating bold flavors that are uniquely different
+              from the rest of Tamil Nadu.
+            </p>
+            <p class="about__text">
+              From the legendary
+              <span class="about__highlight">Pallipalayam Chicken</span> to the
+              aromatic
+              <span class="about__highlight">Seeraga Samba Biryani</span>, every
+              dish tells a story of tradition passed down through generations of
+              home cooks turned restaurateurs.
+            </p>
+            <ul class="about__list">
+              <li>
+                <i class="fas fa-fire"></i> Famous for Pallipalayam-style dry
+                roasts
+              </li>
+              <li>
+                <i class="fas fa-seedling"></i> Fresh, locally sourced
+                ingredients
+              </li>
+              <li>
+                <i class="fas fa-utensils"></i> Home-style cooking in
+                traditional messes
+              </li>
+              <li>
+                <i class="fas fa-pepper-hot"></i> Bold, unapologetic spice
+                profiles
+              </li>
+              <li>
+                <i class="fas fa-bowl-rice"></i> Seeraga Samba rice — the
+                fragrant biryani grain
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <div class="footer__logo">FOOD <span>DEVELOPER</span></div>
+            <p class="footer__desc">
+              Your all-in-one portal to order food online, reserve dining
+              tables, and explore the best local restaurants in Erode, Tamil
+              Nadu. Experience authentic flavors with verified pricing.
+            </p>
+            <div class="footer__social">
+              <a href="#" aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" aria-label="Facebook"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="#" aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer__col">
+            <h4 class="footer__title">Quick Links</h4>
+            <ul class="footer__links">
+              <li><a href="#hero">Home</a></li>
+              <li><a href="#featured">Featured Dish</a></li>
+              <li><a href="#restaurants">Restaurants</a></li>
+              <li><a href="#suggestions">Suggestions</a></li>
+              <li><a href="#about">About Erode Food</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4 class="footer__title">Top Restaurants</h4>
+            <ul class="footer__links">
+              <li><a href="#restaurants">Junior Kuppanna</a></li>
+              <li><a href="#restaurants">Erode Amman Mess</a></li>
+              <li><a href="#restaurants">Barbequeen</a></li>
+              <li><a href="#restaurants">Khalids Biriyani</a></li>
+              <li><a href="#restaurants">Karuppusamy Hotel</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <p>
+            &copy; 2026 Food Developer. Crafted with
+            <i class="fas fa-heart" style="color: #f7ea48"></i> for Erode's food
+            lovers. All prices are approximate and may vary.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================== MODAL OVERLAY ==================== -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div id="modal-content">
+        <!-- Modal content rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ==================== CART OVERLAY & SIDEBAR ==================== -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+      <div class="cart-sidebar__header">
+        <h3 class="cart-sidebar__title">
+          <i class="fas fa-shopping-bag"></i> Your Cart
+        </h3>
+        <button
+          class="cart-sidebar__close"
+          id="cart-close"
+          aria-label="Close cart"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="cart-sidebar__body" id="cart-items">
+        <!-- Cart items rendered dynamically -->
+      </div>
+      <div class="cart-sidebar__footer" id="cart-footer">
+        <div class="cart-summary">
+          <div class="cart-summary__row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">₹0</span>
+          </div>
+          <div class="cart-summary__row">
+            <span>GST (5%)</span>
+            <span id="cart-tax">₹0</span>
+          </div>
+          <div class="cart-summary__row cart-summary__row--total">
+            <span>Grand Total</span>
+            <span id="cart-total">₹0</span>
+          </div>
+        </div>
+        <div class="cart-sidebar__actions">
+          <button class="btn-primary" id="checkout-btn">
+            Proceed to Payment <i class="fas fa-credit-card"></i>
+          </button>
+          <button class="cart-sidebar__clear" onclick="clearCart()">
+            Clear Cart
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==================== TABLE BOOKING MODAL ==================== -->
+    <div class="table-modal-overlay" id="table-modal-overlay">
+      <div class="table-modal">
+        <div class="table-modal__header">
+          <button
+            class="table-modal__close"
+            id="table-modal-close"
+            aria-label="Close booking modal"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+          <h2>Book a Table</h2>
+          <p>
+            Experience the finest Kongunadu hospitality. Book your dining space
+            in seconds.
+          </p>
+        </div>
+        <form class="table-modal__form" id="table-form">
+          <div class="table-form__group">
+            <label class="table-form__label" for="table-name">Full Name</label>
+            <input
+              class="table-form__input"
+              type="text"
+              id="table-name"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+          <div class="table-form__row">
+            <div class="table-form__group">
+              <label class="table-form__label" for="table-guests"
+                >Number of Guests</label
+              >
+              <select class="table-form__select" id="table-guests" required>
+                <option value="2">2 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="6">6 Guests</option>
+                <option value="8">8 Guests</option>
+                <option value="10">10+ Guests</option>
+              </select>
+            </div>
+            <div class="table-form__group">
+              <label class="table-form__label" for="table-date">Date</label>
+              <input
+                class="table-form__input"
+                type="date"
+                id="table-date"
+                required
+              />
+            </div>
+          </div>
+          <div class="table-form__group">
+            <label class="table-form__label" for="table-time"
+              >Preferred Time</label
+            >
+            <select class="table-form__select" id="table-time" required>
+              <option value="12:00 PM">Lunch — 12:00 PM</option>
+              <option value="1:00 PM">Lunch — 1:00 PM</option>
+              <option value="2:00 PM">Lunch — 2:00 PM</option>
+              <option value="7:00 PM">Dinner — 7:00 PM</option>
+              <option value="8:00 PM">Dinner — 8:00 PM</option>
+              <option value="9:00 PM">Dinner — 9:00 PM</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary">
+            Reserve Dining Table <i class="fas fa-chair"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== BACK TO TOP ==================== -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div class="toast" id="toast"></div>
+
+    <!-- App Script -->
+    <script src="app.js"></script>
+  </body>
+</html>
