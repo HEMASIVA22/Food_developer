@@ -52,14 +52,81 @@
           id="book-table-btn"
           aria-label="Book a table"
         >
-          <i class="fas fa-calendar-alt"></i> <span>Book Table</span>
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            style="
+              width: 14px;
+              height: 14px;
+              fill: none;
+              stroke: currentColor;
+              stroke-width: 2;
+              margin-right: 6px;
+              display: inline-block;
+              vertical-align: middle;
+            "
+          >
+            <rect
+              x="3"
+              y="4"
+              width="18"
+              height="18"
+              rx="2"
+              ry="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <line
+              x1="16"
+              y1="2"
+              x2="16"
+              y2="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <line
+              x1="8"
+              y1="2"
+              x2="8"
+              y2="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <line
+              x1="3"
+              y1="10"
+              x2="21"
+              y2="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>Book Table</span>
         </button>
         <button
           class="nav__cart-btn"
           id="cart-btn"
           aria-label="View shopping cart"
         >
-          <i class="fas fa-shopping-bag"></i>
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            style="
+              width: 20px;
+              height: 20px;
+              fill: none;
+              stroke: currentColor;
+              stroke-width: 2;
+              display: inline-block;
+              vertical-align: middle;
+            "
+          >
+            <path
+              d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
           <span class="nav__cart-count" id="cart-count" data-count="0">0</span>
         </button>
       </div>
@@ -90,12 +157,29 @@
 
     <!-- ==================== HERO SECTION ==================== -->
     <section class="hero" id="hero">
-      <div
-        class="hero__bg"
-        style="
-          background-image: url(&quot;https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&h=900&fit=crop&q=80&quot;);
-        "
-      ></div>
+      <div class="hero__bg">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          class="hero__video"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+          "
+        >
+          <source
+            src="https://player.vimeo.com/external/435674703.sd.mp4?s=7f36ee3d122e25d2c4b8b6038167f9fa68cf1808&profile_id=165&oauth2_token_id=57447761"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      </div>
       <div class="hero__overlay"></div>
       <div class="hero__content">
         <span class="hero__tag">Discover & Dine</span>
@@ -148,13 +232,47 @@
             </p>
             <div class="featured__meta">
               <span class="featured__price">₹250 – ₹500</span>
-              <span class="featured__rating"
-                ><i class="fas fa-star"></i> 4.7 Avg Rating</span
-              >
+              <span class="featured__rating">
+                <svg
+                  class="icon-svg icon-svg--star"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #f7ea48;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 4px;
+                  "
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+                4.7 Avg Rating
+              </span>
             </div>
             <a href="#restaurants" class="btn-primary"
-              >Find It Now <i class="fas fa-arrow-right"></i
-            ></a>
+              >Find It Now
+              <svg
+                class="icon-svg icon-svg--arrow"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                style="
+                  width: 16px;
+                  height: 16px;
+                  fill: currentColor;
+                  display: inline-block;
+                  vertical-align: middle;
+                  margin-left: 4px;
+                "
+              >
+                <path
+                  d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -175,7 +293,26 @@
         <!-- Controls: Search + Filter -->
         <div class="controls reveal">
           <div class="search__wrapper">
-            <i class="fas fa-search search__icon"></i>
+            <svg
+              class="search__icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              style="
+                width: 16px;
+                height: 16px;
+                fill: none;
+                stroke: #dbe2dc;
+                stroke-width: 2;
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+              "
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
             <input
               type="text"
               class="search__input"
@@ -399,6 +536,14 @@
             <span>Subtotal</span>
             <span id="cart-subtotal">₹0</span>
           </div>
+          <div
+            class="cart-summary__row"
+            id="discount-row"
+            style="display: none; color: #8b1a1a"
+          >
+            <span>Discount (Promo)</span>
+            <span id="cart-discount">-₹0</span>
+          </div>
           <div class="cart-summary__row">
             <span>GST (5%)</span>
             <span id="cart-tax">₹0</span>
@@ -407,6 +552,44 @@
             <span>Grand Total</span>
             <span id="cart-total">₹0</span>
           </div>
+        </div>
+
+        <!-- Promo code panel -->
+        <div
+          class="cart-promo"
+          style="
+            margin: 16px 0;
+            padding: 12px 0;
+            border-top: 1px solid var(--color-sage-mist, #dbe2dc);
+            border-bottom: 1px solid var(--color-sage-mist, #dbe2dc);
+            display: flex;
+            gap: 8px;
+          "
+        >
+          <input
+            type="text"
+            id="promo-code"
+            placeholder="Enter coupon (e.g. SWIGGY50)"
+            style="
+              flex: 1;
+              padding: 8px 12px;
+              font-size: 13px;
+              border: 1px solid var(--color-sage-mist, #dbe2dc);
+              border-radius: 1px;
+              outline: none;
+              text-transform: uppercase;
+              font-family: var(--font-primary, sans-serif);
+              background: #ffffff;
+              color: #1d0b0d;
+            "
+          />
+          <button
+            class="btn-primary"
+            id="apply-promo-btn"
+            style="padding: 8px 16px; font-size: 12px; height: auto"
+          >
+            Apply
+          </button>
         </div>
         <div class="cart-sidebar__actions">
           <button class="btn-primary" id="checkout-btn">

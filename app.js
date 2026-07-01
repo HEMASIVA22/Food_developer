@@ -1100,6 +1100,8 @@ let state = {
   modalRestaurantId: null,
   comments: JSON.parse(localStorage.getItem("foodDevComments")) || {},
   cart: JSON.parse(localStorage.getItem("foodDevCart")) || [],
+  appliedPromo: "",
+  promoDiscount: 0,
 };
 
 /* ==================== UTILITY FUNCTIONS ==================== */
@@ -1120,11 +1122,30 @@ function renderStars(rating) {
   let html = "";
   for (let i = 1; i <= 5; i++) {
     if (rating >= i) {
-      html += '<i class="fas fa-star"></i>';
+      html += `
+        <svg class="star-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px; height:12px; fill:#f7ea48; display:inline-block; margin-right:1px; vertical-align:middle;">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      `;
     } else if (rating >= i - 0.5) {
-      html += '<i class="fas fa-star-half-alt"></i>';
+      const gradId = "grad-" + Math.random().toString(36).substr(2, 5);
+      html += `
+        <svg class="star-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px; height:12px; display:inline-block; margin-right:1px; vertical-align:middle;">
+          <defs>
+            <linearGradient id="${gradId}">
+              <stop offset="50%" stop-color="#f7ea48"/>
+              <stop offset="50%" stop-color="rgba(128, 128, 128, 0.25)"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="url(#${gradId})"/>
+        </svg>
+      `;
     } else {
-      html += '<i class="far fa-star empty"></i>';
+      html += `
+        <svg class="star-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px; height:12px; fill:rgba(128, 128, 128, 0.25); display:inline-block; margin-right:1px; vertical-align:middle;">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      `;
     }
   }
   return html;
@@ -1173,13 +1194,22 @@ function renderRestaurantCards(restaurantList) {
         <div class="restaurant-card__body">
           <h3 class="restaurant-card__name">${r.name}</h3>
           <div class="restaurant-card__meta">
-            <span class="restaurant-card__rating"><i class="fas fa-star"></i> ${r.rating}</span>
+            <span class="restaurant-card__rating">
+              <svg class="icon-svg icon-svg--star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px; height:12px; fill:#1d0b0d; display:inline-block; vertical-align:middle; margin-right:4px;">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+              </svg>
+              ${r.rating}
+            </span>
             <span class="restaurant-card__price">${r.priceRange} for two</span>
           </div>
           <p class="restaurant-card__location"><i class="fas fa-map-marker-alt"></i> ${r.location}</p>
           <div class="restaurant-card__footer">
             <span class="restaurant-card__comments"><i class="far fa-comment"></i> ${commentCount} reviews</span>
-            <button class="btn-ghost">EXPLORE <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-ghost">EXPLORE 
+              <svg class="icon-svg icon-svg--arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:14px; height:14px; fill:currentColor; display:inline-block; vertical-align:middle; margin-left:4px; transition: transform 0.3s;">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+              </svg>
+            </button>
           </div>
         </div>
       </article>
@@ -1313,6 +1343,10 @@ function updateCartQuantity(itemId, delta) {
 
 function clearCart() {
   state.cart = [];
+  state.appliedPromo = "";
+  state.promoDiscount = 0;
+  const promoInput = document.getElementById("promo-code");
+  if (promoInput) promoInput.value = "";
   saveCart();
   renderCart();
 }
@@ -1379,8 +1413,22 @@ function renderCart() {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-  const tax = Math.round(subtotal * 0.05);
-  const total = subtotal + tax;
+
+  let discountVal = 0;
+  const discountRow = document.getElementById("discount-row");
+  const discountText = document.getElementById("cart-discount");
+
+  if (state.promoDiscount > 0) {
+    discountVal = Math.round(subtotal * (state.promoDiscount / 100));
+    if (discountRow) discountRow.style.display = "flex";
+    if (discountText) discountText.textContent = `-₹${discountVal}`;
+  } else {
+    if (discountRow) discountRow.style.display = "none";
+  }
+
+  const subtotalAfterDiscount = Math.max(0, subtotal - discountVal);
+  const tax = Math.round(subtotalAfterDiscount * 0.05);
+  const total = subtotalAfterDiscount + tax;
 
   document.getElementById("cart-subtotal").textContent = `₹${subtotal}`;
   document.getElementById("cart-tax").textContent = `₹${tax}`;
@@ -1394,8 +1442,13 @@ function proceedToPayment() {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-  const tax = Math.round(subtotal * 0.05);
-  const total = subtotal + tax;
+  const discountVal =
+    state.promoDiscount > 0
+      ? Math.round(subtotal * (state.promoDiscount / 100))
+      : 0;
+  const subtotalAfterDiscount = Math.max(0, subtotal - discountVal);
+  const tax = Math.round(subtotalAfterDiscount * 0.05);
+  const total = subtotalAfterDiscount + tax;
   const itemCount = state.cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const itemsContainer = document.getElementById("cart-items");
@@ -1427,9 +1480,42 @@ function proceedToPayment() {
       </div>
     `;
     state.cart = [];
+    state.appliedPromo = "";
+    state.promoDiscount = 0;
+    const promoInput = document.getElementById("promo-code");
+    if (promoInput) promoInput.value = "";
     saveCart();
     showToast("Payment Successful! Order Confirmed.");
   }, 2000);
+}
+
+function setupPromoCodes() {
+  const applyBtn = document.getElementById("apply-promo-btn");
+  const promoInput = document.getElementById("promo-code");
+
+  if (applyBtn && promoInput) {
+    applyBtn.addEventListener("click", () => {
+      const code = promoInput.value.trim().toUpperCase();
+      if (!code) {
+        showToast("Please enter a coupon code.");
+        return;
+      }
+
+      if (code === "SWIGGY50") {
+        state.appliedPromo = "SWIGGY50";
+        state.promoDiscount = 50;
+        showToast("Success! 50% discount applied to your order.");
+        renderCart();
+      } else if (code === "WELCOME10") {
+        state.appliedPromo = "WELCOME10";
+        state.promoDiscount = 10;
+        showToast("Success! 10% discount applied to your order.");
+        renderCart();
+      } else {
+        showToast("Invalid coupon code.");
+      }
+    });
+  }
 }
 
 /* ==================== TABLE RESERVATION SYSTEM ==================== */
@@ -1504,7 +1590,7 @@ function openModal(restaurantId) {
           '<span class="menu__item-badge menu__item-badge--popular">★ POPULAR</span>';
 
       return `
-      <div class="menu__item" style="display:flex; gap:16px; align-items:center; padding: 16px 0;">
+      <div class="menu__item" data-veg="${item.isVeg}" style="display:flex; gap:16px; align-items:center; padding: 16px 0;">
         <img src="${item.image}" alt="${item.name}" style="width:70px; height:70px; object-fit:cover; border-radius:1px;" loading="lazy">
         <div class="menu__item-info" style="flex:1;">
           <div class="menu__item-name" style="font-weight: 500; font-size: 16px; margin-bottom:2px;">${item.name}</div>
@@ -1535,21 +1621,48 @@ function openModal(restaurantId) {
 
   const modalHTML = `
     <div class="modal">
-      <button class="modal__close" id="modal-close"><i class="fas fa-times"></i></button>
+      <button class="modal__close" id="modal-close">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5; display:block;"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
       <img class="modal__hero" src="${r.image}" alt="${r.name}">
       <div class="modal__header">
         <h2 class="modal__name">${r.name}</h2>
         <div class="modal__meta">
-          <span class="modal__badge modal__badge--rating"><i class="fas fa-star"></i> ${r.rating}</span>
-          <span class="modal__badge"><i class="fas fa-utensils"></i> ${r.cuisine}</span>
-          <span class="modal__badge"><i class="fas fa-map-marker-alt"></i> ${r.location}</span>
-          <span class="modal__badge"><i class="fas fa-rupee-sign"></i> ${r.priceRange}</span>
+          <span class="modal__badge modal__badge--rating">
+            <svg class="icon-svg icon-svg--star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px; height:12px; fill:#1d0b0d; display:inline-block; vertical-align:middle; margin-right:4px;">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+            ${r.rating}
+          </span>
+          <span class="modal__badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; margin-right:4px; display:inline-block; vertical-align:middle;"><path d="M12 2v20M17 5H7a2 2 0 00-2 2v3a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            ${r.cuisine}
+          </span>
+          <span class="modal__badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; margin-right:4px; display:inline-block; vertical-align:middle;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            ${r.location}
+          </span>
+          <span class="modal__badge">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:2.5; margin-right:4px; display:inline-block; vertical-align:middle;"><path d="M6 4h12M6 10h12M6 4c0 6 8 6 8 6H6v8l6 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            ${r.priceRange}
+          </span>
         </div>
       </div>
       <p class="modal__desc">${r.description}</p>
       <div class="menu">
-        <h3 class="menu__title">Full Menu</h3>
-        ${menuHTML}
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #103b15; padding:24px 0 12px; margin-bottom:12px;">
+          <h3 class="menu__title" style="margin:0; border:none; padding:0; text-transform:uppercase;">Full Menu</h3>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.84px; text-transform:uppercase; color:#103b15; opacity:0.7;">Veg Only</span>
+            <label class="switch">
+              <input type="checkbox" id="modal-veg-toggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <div id="modal-menu-list">
+          ${menuHTML}
+        </div>
       </div>
       <div class="comments">
         <h3 class="comments__title">Reviews & Comments</h3>
@@ -1573,6 +1686,22 @@ function openModal(restaurantId) {
 
   const modalContent = document.getElementById("modal-content");
   if (modalContent) modalContent.innerHTML = modalHTML;
+
+  const vegToggle = document.getElementById("modal-veg-toggle");
+  if (vegToggle) {
+    vegToggle.addEventListener("change", (e) => {
+      const isVegOnly = e.target.checked;
+      const menuItems = document.querySelectorAll(".menu__item");
+      menuItems.forEach((item) => {
+        const isVeg = item.getAttribute("data-veg") === "true";
+        if (isVegOnly && !isVeg) {
+          item.style.display = "none";
+        } else {
+          item.style.display = "flex";
+        }
+      });
+    });
+  }
 
   const overlay = document.getElementById("modal-overlay");
   if (overlay) overlay.classList.add("modal-overlay--active");
@@ -1967,6 +2096,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupHeroParallax();
   setupSmoothScroll();
   setupTableReservation();
+  setupPromoCodes();
   updateCartBadge();
 
   // Cart open/close triggers
